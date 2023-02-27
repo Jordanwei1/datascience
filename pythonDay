@@ -1,0 +1,32 @@
+#巩固循环
+import random
+
+
+num = 0
+stone = 1
+scissors = 2
+fabric = 3
+user_s = 0
+pc_s = 0
+while num <= 3:
+    #用户输入猜拳
+    num+=1
+    if num == 4:
+        break
+    user1 = int(input('请输入石头1剪刀2布3：'))
+    #电脑随机出拳
+    pc = random.randint(1,4)
+    #比较结果
+    if user1 > pc:
+        print('恭喜你赢了')
+        user_s+=1
+    elif user1 == pc:
+        print('打平')
+    else:
+        print('你输了')
+        pc_s+=1
+if user_s>pc_s:
+    print('人类胜利')
+else:
+    print('电脑胜利')
+
