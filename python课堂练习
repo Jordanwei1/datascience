@@ -17,3 +17,49 @@ for i in stra:
     else:
         count_dict[i]=1
 print(count_dict)
+
+
+
+import pymysql
+
+#
+# # 打开数据库连接
+# db = pymysql.connect(host='localhost',
+#                      user='testuser',
+#                      password='test123',
+#                      database='TESTDB')
+#
+# # 使用 cursor() 方法创建一个游标对象 cursor
+# cursor = db.cursor()
+#
+# # 使用 execute()  方法执行 SQL 查询
+# cursor.execute("SELECT VERSION()")
+#
+# # 使用 fetchone() 方法获取单条数据.
+# data = cursor.fetchone()
+#
+# print("Database version : %s " % data)
+#
+# # 关闭数据库连接
+# db.close()
+
+
+
+# 创建连接对象
+
+conn = pymysql.connect(host='rm-2vcmu8n2rg6h60eg3qo.mysql.cn-chengdu.rds.aliyuncs.com',
+                     port=3306,
+                     user='root',
+                     password='Ali36058',
+                     database='a0109')
+
+cur = conn.cursor()
+
+# cur.execute("create table pyt1(id int, name varchar(12))")
+cur.execute("insert into pyt1 values(1,'zhang')")
+cur.execute("commit")
+#
+# a=cur.fetchone()
+# print(a)
+
+conn.close()
