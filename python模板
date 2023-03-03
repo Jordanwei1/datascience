@@ -1,0 +1,441 @@
+[python] view plain copy
+# 通用的预处理框架  
+  
+import pandas as pd  
+import numpy as np  
+import scipy as sp  
+  
+# 文件读取  
+def read_csv_file(f, logging=False):  
+    print("==========读取数据=========")  
+    data =  pd.read_csv(f)  
+    if logging:  
+        print(data.head(5))  
+        print(f, "包含以下列")  
+        print(data.columns.values)  
+        print(data.describe())  
+        print(data.info())  
+    return data  
+ 
+ 
+ 
+# 通用的LogisticRegression框架  
+  
+import pandas as pd  
+import numpy as np  
+from scipy import sparse  
+from sklearn.preprocessing import OneHotEncoder  
+from sklearn.linear_model import LogisticRegression  
+from sklearn.preprocessing import StandardScaler  
+  
+# 1. load data  
+df_train = pd.DataFrame()  
+df_test  = pd.DataFrame()  
+y_train = df_train['label'].values  
+  
+# 2. process data  
+ss = StandardScaler()  
+  
+  
+# 3. feature engineering/encoding  
+# 3.1 For Labeled Feature  
+enc = OneHotEncoder()  
+feats = ["creativeID", "adID", "campaignID"]  
+for i, feat in enumerate(feats):  
+    x_train = enc.fit_transform(df_train[feat].values.reshape(-1, 1))  
+    x_test = enc.fit_transform(df_test[feat].values.reshape(-1, 1))  
+    if i == 0:  
+        X_train, X_test = x_train, x_test  
+    else:  
+        X_train, X_test = sparse.hstack((X_train, x_train)), sparse.hstack((X_test, x_test))  
+  
+# 3.2 For Numerical Feature  
+# It must be a 2-D Data for StandardScalar, otherwise reshape(-1, len(feats)) is required  
+feats = ["price", "age"]  
+x_train = ss.fit_transform(df_train[feats].values)  
+x_test  = ss.fit_transform(df_test[feats].values)  
+X_train, X_test = sparse.hstack((X_train, x_train)), sparse.hstack((X_test, x_test))  
+  
+# model training  
+lr = LogisticRegression()  
+lr.fit(X_train, y_train)  
+proba_test = lr.predict_proba(X_test)[:, 1]  
+
+
+
+ LightGBM
+1. 二分类
+import lightgbm as lgb
+import pandas as pd
+import numpy as np
+import pickle
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+ 
+print("Loading Data ... ")
+ 
+# 导入数据
+train_x, train_y, test_x = load_data()
+ 
+# 用sklearn.cross_validation进行训练数据集划分，这里训练集和交叉验证集比例为7：3，可以自己根据需要设置
+X, val_X, y, val_y = train_test_split(
+    train_x,
+    train_y,
+    test_size=0.05,
+    random_state=1,
+    stratify=train_y ## 这里保证分割后y的比例分布与原数据一致
+)
+ 
+X_train = X
+y_train = y
+X_test = val_X
+y_test = val_y
+ 
+ 
+# create dataset for lightgbm
+lgb_train = lgb.Dataset(X_train, y_train)
+lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)
+# specify your configurations as a dict
+params = {
+    'boosting_type': 'gbdt',
+    'objective': 'binary',
+    'metric': {'binary_logloss', 'auc'},
+    'num_leaves': 5,
+    'max_depth': 6,
+    'min_data_in_leaf': 450,
+    'learning_rate': 0.1,
+    'feature_fraction': 0.9,
+    'bagging_fraction': 0.95,
+    'bagging_freq': 5,
+    'lambda_l1': 1,  
+    'lambda_l2': 0.001,  # 越小l2正则程度越高
+    'min_gain_to_split': 0.2,
+    'verbose': 5,
+    'is_unbalance': True
+}
+ 
+# train
+print('Start training...')
+gbm = lgb.train(params,
+                lgb_train,
+                num_boost_round=10000,
+                valid_sets=lgb_eval,
+                early_stopping_rounds=500)
+ 
+print('Start predicting...')
+ 
+preds = gbm.predict(test_x, num_iteration=gbm.best_iteration)  # 输出的是概率结果
+ 
+# 导出结果
+threshold = 0.5
+for pred in preds:
+    result = 1 if pred > threshold else 0
+ 
+# 导出特征重要性
+importance = gbm.feature_importance()
+names = gbm.feature_name()
+with open('./feature_importance.txt', 'w+') as file:
+    for index, im in enumerate(importance):
+        string = names[index] + ', ' + str(im) + '\n'
+        file.write(string)
+        
+
+
+2. 多分类
+import lightgbm as lgb
+import pandas as pd
+import numpy as np
+import pickle
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+ 
+print("Loading Data ... ")
+ 
+# 导入数据
+train_x, train_y, test_x = load_data()
+ 
+# 用sklearn.cross_validation进行训练数据集划分，这里训练集和交叉验证集比例为7：3，可以自己根据需要设置
+X, val_X, y, val_y = train_test_split(
+    train_x,
+    train_y,
+    test_size=0.05,
+    random_state=1,
+    stratify=train_y ## 这里保证分割后y的比例分布与原数据一致
+)
+ 
+X_train = X
+y_train = y
+X_test = val_X
+y_test = val_y
+ 
+ 
+# create dataset for lightgbm
+lgb_train = lgb.Dataset(X_train, y_train)
+lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)
+# specify your configurations as a dict
+params = {
+    'boosting_type': 'gbdt',
+    'objective': 'multiclass',
+    'num_class': 9,
+    'metric': 'multi_error',
+    'num_leaves': 300,
+    'min_data_in_leaf': 100,
+    'learning_rate': 0.01,
+    'feature_fraction': 0.8,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'lambda_l1': 0.4,
+    'lambda_l2': 0.5,
+    'min_gain_to_split': 0.2,
+    'verbose': 5,
+    'is_unbalance': True
+}
+ 
+# train
+print('Start training...')
+gbm = lgb.train(params,
+                lgb_train,
+                num_boost_round=10000,
+                valid_sets=lgb_eval,
+                early_stopping_rounds=500)
+ 
+print('Start predicting...')
+ 
+preds = gbm.predict(test_x, num_iteration=gbm.best_iteration)  # 输出的是概率结果
+ 
+# 导出结果
+for pred in preds:
+    result = prediction = int(np.argmax(pred))
+ 
+# 导出特征重要性
+importance = gbm.feature_importance()
+names = gbm.feature_name()
+with open('./feature_importance.txt', 'w+') as file:
+    for index, im in enumerate(importance):
+        string = names[index] + ', ' + str(im) + '\n'
+        file.write(string)
+        
+XGBoost
+1. 二分类
+import numpy as np
+import pandas as pd
+import xgboost as xgb
+import time
+from sklearn.model_selection import StratifiedKFold
+ 
+ 
+from sklearn.model_selection import train_test_split
+train_x, train_y, test_x = load_data()
+ 
+# 构建特征
+ 
+ 
+# 用sklearn.cross_validation进行训练数据集划分，这里训练集和交叉验证集比例为7：3，可以自己根据需要设置
+X, val_X, y, val_y = train_test_split(
+    train_x,
+    train_y,
+    test_size=0.01,
+    random_state=1,
+    stratify=train_y
+)
+ 
+# xgb矩阵赋值
+xgb_val = xgb.DMatrix(val_X, label=val_y)
+xgb_train = xgb.DMatrix(X, label=y)
+xgb_test = xgb.DMatrix(test_x)
+ 
+# xgboost模型 #####################
+ 
+params = {
+    'booster': 'gbtree',
+    # 'objective': 'multi:softmax',  # 多分类的问题、
+    # 'objective': 'multi:softprob',   # 多分类概率
+    'objective': 'binary:logistic',
+    'eval_metric': 'logloss',
+    # 'num_class': 9,  # 类别数，与 multisoftmax 并用
+    'gamma': 0.1,  # 用于控制是否后剪枝的参数,越大越保守，一般0.1、0.2这样子。
+    'max_depth': 8,  # 构建树的深度，越大越容易过拟合
+    'alpha': 0,   # L1正则化系数
+    'lambda': 10,  # 控制模型复杂度的权重值的L2正则化项参数，参数越大，模型越不容易过拟合。
+    'subsample': 0.7,  # 随机采样训练样本
+    'colsample_bytree': 0.5,  # 生成树时进行的列采样
+    'min_child_weight': 3,
+    # 这个参数默认是 1，是每个叶子里面 h 的和至少是多少，对正负样本不均衡时的 0-1 分类而言
+    # ，假设 h 在 0.01 附近，min_child_weight 为 1 意味着叶子节点中最少需要包含 100 个样本。
+    # 这个参数非常影响结果，控制叶子节点中二阶导的和的最小值，该参数值越小，越容易 overfitting。
+    'silent': 0,  # 设置成1则没有运行信息输出，最好是设置为0.
+    'eta': 0.03,  # 如同学习率
+    'seed': 1000,
+    'nthread': -1,  # cpu 线程数
+    'missing': 1,
+    'scale_pos_weight': (np.sum(y==0)/np.sum(y==1))  # 用来处理正负样本不均衡的问题,通常取：sum(negative cases) / sum(positive cases)
+    # 'eval_metric': 'auc'
+}
+plst = list(params.items())
+num_rounds = 2000  # 迭代次数
+watchlist = [(xgb_train, 'train'), (xgb_val, 'val')]
+ 
+# 交叉验证
+result = xgb.cv(plst, xgb_train, num_boost_round=200, nfold=4, early_stopping_rounds=200, verbose_eval=True, folds=StratifiedKFold(n_splits=4).split(X, y))
+ 
+# 训练模型并保存
+# early_stopping_rounds 当设置的迭代次数较大时，early_stopping_rounds 可在一定的迭代次数内准确率没有提升就停止训练
+model = xgb.train(plst, xgb_train, num_rounds, watchlist, early_stopping_rounds=200)
+model.save_model('../data/model/xgb.model')  # 用于存储训练出的模型
+ 
+preds = model.predict(xgb_test)
+ 
+# 导出结果
+threshold = 0.5
+for pred in preds:
+    result = 1 if pred > threshold else 0
+    
+Keras
+1. 二分类
+import numpy as np
+import pandas as pd
+import time
+from sklearn.model_selection import train_test_split
+from matplotlib import pyplot as plt
+ 
+from keras.models import Sequential
+from keras.layers import Dropout
+from keras.layers import Dense, Activation
+from keras.utils.np_utils import to_categorical
+ 
+# coding=utf-8
+from model.util import load_data as load_data_1
+from model.util_combine_train_test import load_data as load_data_2
+from sklearn.preprocessing import StandardScaler # 用于特征的标准化
+from sklearn.preprocessing import Imputer
+ 
+print("Loading Data ... ")
+# 导入数据
+train_x, train_y, test_x = load_data()
+ 
+# 构建特征
+X_train = train_x.values
+X_test  = test_x.values
+y = train_y
+ 
+imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
+X_train = imp.fit_transform(X_train)
+ 
+sc = StandardScaler()
+sc.fit(X_train)
+X_train = sc.transform(X_train)
+X_test  = sc.transform(X_test)
+ 
+ 
+model = Sequential()
+model.add(Dense(256, input_shape=(X_train.shape[1],)))
+model.add(Activation('tanh'))
+model.add(Dropout(0.3))
+model.add(Dense(512))
+model.add(Activation('relu'))
+model.add(Dropout(0.3))
+model.add(Dense(512))
+model.add(Activation('tanh'))
+model.add(Dropout(0.3))
+model.add(Dense(256))
+model.add(Activation('linear'))
+model.add(Dense(1)) # 这里需要和输出的维度一致
+model.add(Activation('sigmoid'))
+ 
+# For a multi-class classification problem
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
+ 
+epochs = 100
+model.fit(X_train, y, epochs=epochs, batch_size=2000, validation_split=0.1, shuffle=True)
+ 
+# 导出结果
+threshold = 0.5
+for index, case in enumerate(X_test):
+    case =np.array([case])
+    prediction_prob = model.predict(case)
+    prediction = 1 if prediction_prob[0][0] > threshold else 0
+    
+2. 多分类
+import numpy as np
+import pandas as pd
+import time
+from sklearn.model_selection import train_test_split
+from matplotlib import pyplot as plt
+ 
+from keras.models import Sequential
+from keras.layers import Dropout
+from keras.layers import Dense, Activation
+from keras.utils.np_utils import to_categorical
+ 
+# coding=utf-8
+from model.util import load_data as load_data_1
+from model.util_combine_train_test import load_data as load_data_2
+from sklearn.preprocessing import StandardScaler # 用于特征的标准化
+from sklearn.preprocessing import Imputer
+ 
+print("Loading Data ... ")
+# 导入数据
+train_x, train_y, test_x = load_data()
+ 
+# 构建特征
+X_train = train_x.values
+X_test  = test_x.values
+y = train_y
+ 
+# 特征处理
+sc = StandardScaler()
+sc.fit(X_train)
+X_train = sc.transform(X_train)
+X_test  = sc.transform(X_test)
+y = to_categorical(y) ## 这一步很重要，一定要将多类别的标签进行one-hot编码
+ 
+ 
+model = Sequential()
+model.add(Dense(256, input_shape=(X_train.shape[1],)))
+model.add(Activation('tanh'))
+model.add(Dropout(0.3))
+model.add(Dense(512))
+model.add(Activation('relu'))
+model.add(Dropout(0.3))
+model.add(Dense(512))
+model.add(Activation('tanh'))
+model.add(Dropout(0.3))
+model.add(Dense(256))
+model.add(Activation('linear'))
+model.add(Dense(9)) # 这里需要和输出的维度一致
+model.add(Activation('softmax'))
+ 
+# For a multi-class classification problem
+model.compile(optimizer='rmsprop',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+ 
+epochs = 200
+model.fit(X_train, y, epochs=epochs, batch_size=200, validation_split=0.1, shuffle=True)
+ 
+# 导出结果
+for index, case in enumerate(X_test):
+    case = np.array([case])
+    prediction_prob = model.predict(case)
+    prediction = np.argmax(prediction_prob)
+    
+    
+    
+    
+    
+    
+处理正负样本不均匀的案例
+有些案例中，正负样本数量相差非常大，数据严重unbalanced，这里提供几个解决的思路
+# 计算正负样本比例
+positive_num = df_train[df_train['label']==1].values.shape[0]
+negative_num = df_train[df_train['label']==0].values.shape[0]
+print(float(positive_num)/float(negative_num))
+
+主要思路
+1. 手动调整正负样本比例
+2. 过采样 Over-Sampling
+对训练集里面样本数量较少的类别（少数类）进行过采样，合成新的样本来缓解类不平衡，比如SMOTE算法
+3. 欠采样 Under-Sampling
+4. 将样本按比例一一组合进行训练，训练出多个弱分类器，最后进行集成
