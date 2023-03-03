@@ -439,3 +439,537 @@ print(float(positive_num)/float(negative_num))
 对训练集里面样本数量较少的类别（少数类）进行过采样，合成新的样本来缓解类不平衡，比如SMOTE算法
 3. 欠采样 Under-Sampling
 4. 将样本按比例一一组合进行训练，训练出多个弱分类器，最后进行集成
+
+
+
+排序算法
+def quick_sort(a,l,r):
+	if(l>=r):
+		return 
+	key = a[l]
+	i,j = l-1,r+1
+	while(i<j):
+		i+=1
+		j-=1
+		while(a[j]>key):
+			j-=1
+		while(a[i]<key):
+			i+=1
+		if(i<j):
+			temp = a[i]
+			a[i] = a[j]
+			a[j] = temp
+	quick_sort(a,l,j)
+	quick_sort(a,j+1,r)
+  
+  
+  归并排序
+  def merge_sort(a,temp,l,r):
+	if(l>=r):
+		return
+	mid = (r+l)//2
+	merge_sort(a,temp,l,mid)
+	merge_sprt(a,temp,mid+1,r)
+	
+	k = 0
+	while(i<=mid and j<=r):
+		if(a[i]<a[j]):
+			temp[k] = a[i]
+			i+=1
+		else:
+			temp[k] = a[j]
+			j+=1
+		k+=1
+		
+	while(i<=mid):
+		temp[k] = a[i]
+		k+=1
+		i+=1
+	while(j<=r):
+		temp[k] = a[j]
+		j+=1
+		k+=1
+	
+	k = 0
+	i = l
+	while(i<=r):
+		a[i] = temp[k]
+		k+=1
+		i+=1
+
+
+
+KMP算法
+def getNe(s):
+	"""
+	求取next数组
+	"""
+	m = len(s)
+	#数组取大一点是没有关系的
+	next = [0 for _ in range(m+10)]
+	i = 1
+	j = 0
+	while(i<m):
+		while(j>0 and s[i]!=s[j]):
+			j = next[j-1]
+		if(s[i]==s[j]);
+			j+=1
+		next[i] = j
+		i+=1
+	return next
+
+
+def KMP(s1,s2):
+	"""
+	返回第x个字符之后会匹配上
+	"""
+	next = getNe(s2)
+	m_s1 = len(s1)
+	m_s2 = len(s2)
+	
+	i = 0
+	j = 0
+	while(i<m_s1):
+		while(j>0 and s1[i]!=s2[j]):
+			j = next[j-1]
+		if(s1[i]==s2[j]):
+			j+=1
+		if(j==m_s2):
+			return i - m_s2 + 1
+		i+=1
+	return -1
+
+
+Floyd 算法
+def Floyd(g):
+
+    for k in range(1,100):
+        for i in range(1,100):
+            for j in range(1,100):
+                g[i][j] = min(g[i][k]+g[k][j],g[i][j])
+                
+                
+Dijkstra 算法
+def Dijkstra(g):
+	st = [False for _ in range(n+1)]
+	dist = [float("inf") for _ in range(n+1)]
+	dist[1] = 0
+	for i in range(n-1):
+		t = -1
+		for j in range(1,n+1):
+			if(not st[j] and (t==-1 or dist[t]>dist[j]):
+				t = j 
+		
+		for j in range(1,n+1);
+			dist[j] = min(dist[j],dist[t]+g[t][j])
+	if(dist[n]==float("inf")):
+		return False
+
+
+
+BellMan-Ford 算法
+class node:
+	a = None
+	b = None
+	c = None
+Nodes = [node(a,b,c) for _ in range(m)]
+
+def BellmanFord():
+	dist = [float("inf") for _ in range(1,n+1)]
+	dist[i] = 0
+	for i in range(n):
+		for j in range(m);
+			a,b,w = Nodes[j].a,Nodes[j].b,Nodes[j].c
+			dist[b] = min(dist[b],dist[a]+w)
+
+
+SPFA 算法
+
+def SPFA():
+	import collections
+	q = collections.deque()
+	dist = [float("inf") for _ in range(n)]
+	st = [False for _ in range(n)]
+
+	q.append(1)
+	st[1]=True
+	while(len(q)):
+		t = q.pop()
+		st[t] = False
+		i = h[t]
+		while(i!=-1):
+			j = e[i]
+			if(dist[j]>dist[t]+w[i]):
+				dist[j] = dist[t]+w[i]
+				if(not st[j]):
+					q.append(j)
+					st[j] = True
+			i = ne[i]
+	# 这个自己取一个比较大的数
+ 	if(dist[n]>=100000):
+ 		return False
+
+
+Prim 算法
+
+def Prime(g):
+    """
+    这里的话还是使用邻接矩阵的
+    :return:
+    """
+    dist = [float("inf") for _ in range(100)]
+    st = [False for _ in range(100)]
+    res = 0
+    for i in range(100):
+
+        t = -1
+        for j in range(1,101):
+            if((t == -1 and not st[j]) or dist[t]>dist[j]):
+                t = j
+
+        if(i and dist[t] == float("inf")):
+            return float("inf")
+
+        if(i):
+            res+=dist[t]
+
+        for j in range(100):
+            dist[j] = min(dist[j],g[t][j])
+
+
+Kruskra 算法
+
+def Kruskra():
+    """
+    定义这个数据是存储边的
+    :return:
+    """
+    # 这个P的话就是Parents数组
+    p = [0]
+    res = 0
+    cnt = 0
+    Nodes = [Node() for _ in range(100)]
+    sorted(Nodes,lambda node:node.c)
+    for i in range(100):
+        node = Nodes[i]
+        a = find(node.a,p)
+        b = find(node.b,p)
+        if(a!=b):
+            p[a] = b
+            res+=node.c
+            cnt+=1
+        #此时是不连通的
+        if(cnt<100-1):
+            return float("inf")
+
+
+染色法
+
+"""
+0 表示没有染色，1表示白色，2表示黑色
+"""
+
+def upColor(color,a,c):
+	color[a] = c
+	i = h[a]
+	while(i!=-1):
+		j = e[i]
+		if(not color[j]):
+			if(not upColor(st,j,3-c)):
+				return False
+		elif(color[j]==c):
+			return False
+		i = ne[i]
+	return True
+
+def check():
+	
+	for i in range(1,n+1):
+		if(not upColor(st,i,1)):
+			return False
+	return True
+  
+  
+  
+  Hunger算法
+  def Match(st,match,a):
+	
+	i = h[a]
+    while(i!=-1):
+        j = e[i]
+        if(not st[j]):
+            st[j] = True
+            if(match[j]==0 or Match(st,match,j)):
+                match[j] = a
+                return True
+        i = ne[i]
+	return False
+
+def Hunager():
+
+	res = 0 #匹配个数
+	Match = [0 for _ in range(10000)] #右侧的集合元素和左侧的谁进行了匹配
+	for i in range(1,n1+1):
+		# 表示右边的那个集合元素有没有匹配到
+		st = [False for _ in range(10000)]
+		if(Match(st,match,i)):
+			res+=1
+	return res
+		
+	一、二分模板
+题目地址
+
+题目：给你一个 m * n 的矩阵 grid，矩阵中的元素无论是按行还是按列，都以非递增顺序排列。 
+
+请你统计并返回 grid 中 负数 的数目。
+
+思路：找到每排的第一个负数，后面就都是负数了，最后累计负数数目
+
+模板：
+def binary_search(nums, target):
+    low = 0
+    high = len(nums) - 1
+    while low <= high:
+        mid = (low + high) // 2
+ 
+        if nums[mid] == target:
+            return mid
+        if nums[mid] > target:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return low
+ 
+ 
+a = [1, 3, 7, 9, 14, 20, 24]
+print(binary_search(a, 0))  # 0
+print(binary_search(a, 1))  # 0
+print(binary_search(a, 2))  # 1
+print(binary_search(a, 4))  # 2
+print(binary_search(a, 8))  # 3
+ 
+print(binary_search(a, 11))  # 4
+print(binary_search(a, 16))  # 5
+print(binary_search(a, 24))  # 6
+print(binary_search(a, 29))  # 7
+
+
+
+from typing import List
+ 
+ 
+class Solution:
+    def countNegatives(self, grid: List[List[int]]) -> int:
+        res = 0
+        m = grid.__len__()
+        n = grid[0].__len__()
+        for i in range(m):
+            # 二分找到0的位置
+            low, high = 0, n - 1
+            while low < high:
+                mid = (low + high) // 2
+                if grid[i][mid] >= 0:
+                    low = mid + 1
+                else:
+                    high = mid
+ 
+            if grid[i][low] < 0:
+                res += n - low
+        return res
+ 
+ 
+s = Solution()
+print(s.countNegatives([[4, 3, 2, -1], [3, 2, 1, -1], [1, 1, -1, -2], [-1, -1, -2, -3]]))
+# 8
+
+二、递归模板
+题目地址
+
+题目：
+
+在经典汉诺塔问题中，有 3 根柱子及 N 个不同大小的穿孔圆盘，盘子可以滑入任意一根柱子。一开始，所有盘子自上而下按升序依次套在第一根柱子上(即每一个盘子只能放在更大的盘子上面)。移动圆盘时受到以下限制:
+(1) 每次只能移动一个盘子;
+(2) 盘子只能从柱子顶端滑出移到下一根柱子;
+(3) 盘子只能叠在比它大的盘子上。
+
+请编写程序，用栈将所有盘子从第一根柱子移到最后一根柱子。
+
+你需要原地修改栈。
+
+思路：
+
+将N个盘子分为N，N-1两部分，将N-1个盘子看成一个整体，分三步完成移动即可完成
+
+1. N-1部分由A->B
+
+2. N部分由A->C
+
+3. N-1部分由B->C
+
+再把上述N-1部分分为N-1和N-2两部分，继续重复的分三步完成移动
+
+模板：搞清楚递归退出条件是什么，问题怎么分解递归解决的
+def fib(n):
+    # 递归退出条件
+    if n < 2:
+        return n
+    else:
+        # 分解递归
+        return fib(n-1) + fib(n-2)
+ 
+print(fib(10))
+
+
+class Solution:
+    def hanota(self, A: List[int], B: List[int], C: List[int]) -> None:
+        def hanoi(n,a,b,c):
+            # 递归退出条件
+            if n == 1:
+                c.append(a.pop())
+            else:
+                # 分解递归
+                hanoi(n-1,a,c,b)
+                c.append(a.pop())
+                hanoi(n-1,b,a,c)
+ 
+        hanoi(len(A),A,B,C)
+        
+        
+二叉树遍历模板
+# 前序优先遍历
+def qianxu(p: TreeNode):
+    res = []
+    stack = []
+    while (stack.__len__() != 0 or p):
+        if p:
+            res.append(p.val)
+            stack.append(p)
+            p = p.left
+        else:
+            p = stack.pop(-1)
+            p = p.right
+    return res
+ 
+ 
+# 中序优先遍历
+def zhongxu(p: TreeNode):
+    res = []
+    stack = []
+    while (stack.__len__() != 0 or p):
+        if p:
+            stack.append(p)
+            p = p.left
+        else:
+            p = stack.pop(-1)
+            res.append(p.val)
+            p = p.right
+    return res
+ 
+ 
+# 后序优先遍历
+def houxu(p: TreeNode):
+    res = []
+    stack = []
+    d = dict()
+    while (p or stack.__len__() != 0):
+        if p:
+            stack.append(p)
+            d.update({p.val: 1})
+            p = p.left
+        else:
+            p = stack[-1]
+            if d[p.val] == 2:
+                stack.pop(-1)
+                res.append(p.val)
+                p = None
+            else:
+                d[p.val] = 2
+                p = p.right
+ 
+    return res
+ 
+def houxu2( root):
+    '''
+    利用两个栈实现
+    '''
+    s1 = []
+    s2 = []
+    s1.append( root )
+    while s1:
+        node = s1.pop()
+        s2.append( node )
+        if node.lchild:
+            s1.append( node.lchild )
+        if node.rchild:
+            s1.append( node.rchild )
+    while s2:
+        print(s2.pop().value)
+ 
+# 层次遍历，用队列
+def cengci(p: TreeNode):
+    res = []
+    queue = [p]
+    while (queue.__len__() != 0):
+        p = queue.pop(0)
+        res.append(p.val)
+        if p.left:
+            queue.append(p.left)
+        if p.right:
+            queue.append(p.right)
+    return res
+ 
+# 递归
+# 先序
+def preorder(root):
+    if not root:
+        return 
+    print(root.val)
+    preorder(root.left)
+    preorder(root.right) 
+# 中序
+def inorder(root):
+    if not root:
+        return 
+    inorder(root.left)
+    print(root.val)
+    inorder(root.right)
+# 后序
+def postorder(root):
+    if not root:
+        return 
+    postorder(root.left)
+    postorder(root.right)
+    print(root.val)
+    
+    
+    def exists(self, idx: int, d: int, node: TreeNode) -> bool:
+        """
+        Last level nodes are enumerated from 0 to 2**d - 1 (left -> right).
+        Return True if last level node idx exists. 
+        Binary search with O(d) complexity.
+        """
+        left, right = 0, 2**d - 1
+        for _ in range(d):
+            pivot = (left + right) // 2
+            if idx <= pivot:
+                node = node.left
+                right = pivot
+            else:
+                node = node.right
+                left = pivot + 1
+        return node is not None
+
+递归--代码模板
+def recursion(level, param1, param2, ...): 
+    # recursion terminator 
+    if level > MAX_LEVEL: 
+    process_result 
+    return 
+    # process logic in current level 
+    process(level, data...) 
+    # drill down 
+    self.recursion(level + 1, p1, ...) 
+    # reverse the current level status if needed
+    
+    
+   
