@@ -1,3 +1,19 @@
+-- 1 行转列 student2 列转行 student
+
+-- 2  连续最大N user_log
+
+-- 3 留存 留存率  tb_cuid_1d
+
+-- 4 TopN emp2
+
+-- 5 窗口函数 中位数 截断平均数 emp
+
+-- 6 找重复数据
+
+
+
+
+
 create table if not exists student2(
 name varchar(20),
 语文 int,
