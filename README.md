@@ -4,7 +4,7 @@
  
 sql=牛客+力扣
 
-python=python 100肌肉练习热身5题+题型练习（100pandas5+100numpy5+100sklearn 2算法（分类，回归））+170python 8题
+python= 100pandas5+100numpy5+100sklearn 2算法（分类，回归））+170python 8题
 
 case word=8类题型 1个类别
 
