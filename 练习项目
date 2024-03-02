@@ -1,0 +1,19 @@
+-通过CPU/GPU/DSP/NPU的并行计算优化、架构设计、稀疏优化、异构调度等多种高性能优化技术打造业界领先的高性能异构AI推理引擎，利用并行计算、架构设计、稀疏优化等技术提升异构AI推理引擎的性能。
+
+-熟练掌握CPU(ARM/x86)，GPU（Adreno/Mali/PowerVR/Intel/Nvidia/Apple)、DSP(HVX)中的1个或多个平台的高性能计算优化技术，深入理解计算机体系结构，熟悉移动端/服务端/PC端中1个或多个平台的并行计算优化、访存优化，低比特计算等
+
+-具备丰富的ARM NEON汇编优化或OpenCL/Metal/OpenGL/Vulkan/CUDA中的至少1种GPU优化经验，或熟练掌握WebAssembly、WebGL、WebGPU等技术，有这些技术的AI工程优化部署经验者优先；
+
+-熟悉常用图像视觉计算库及深度学习推理计算库，例如arm compute library、tensorflow lite、ncnn、mnn、tnn、mkldnn、TensorRT、CoreML等，熟悉常用的深度学习算子优化方法例如Winograd, Strassen, Implicit GEMM等；
+
+全链路部署优化：将CV、Audio、NLP等深度学习算法在不同平台上进行优化部署，支撑公司AI核心业务的发展。
+核心技术开发与优化：包括AIGC、AI编译优化、端上训练等技术的开发与优化。
+AI工具链与技术生态建设：开发性能分析、模型优化等工具，建设技术生态。
+编程语言：精通C/C++，java，熟悉Python。 
+平台和优化技术：熟练掌握CPU、GPU、DSP等平台的计算优化技术，有汇编优化或高级图形API（如OpenCL、Metal等）的优化经验者优先。 
+深度学习和算法知识：了解深度学习基本原理，熟悉至少一种深度学习框架，掌握神经网络架构和优化方法。 
+AI编译优化技术：掌握如TVM等AI编译优化技术。 
+分布式训练框架：熟悉DeepSpeed、NVIDIA Megatron等分布式训练框架，有大模型训练经验。 
+AI算法和系统：熟悉AI算法原理，有NLP或多模态技术研究和应用经验。 
+项目经验：有深度学习、NLP等实际项目经验，熟悉相关算法、框架和工具链。
+
