@@ -1,0 +1,324 @@
+day1.html<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 知识点大全</title>
+    <style>
+        /* 字体相关属性 */
+        .font-section {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            text-align: center;
+            text-decoration: underline;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #ccc;
+        }
+
+        /* 颜色和背景相关属性 */
+        .color-bg-section {
+            color: #333;
+            background-color: #f0f8ff;
+            background-image: url('https://picsum.photos/800/600');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* 盒模型相关属性 */
+        .box-model-section {
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            border: 5px solid #007BFF;
+            border-radius: 10px;
+            margin: 30px auto;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 列表相关属性 */
+        .list-section ul {
+            list-style-type: circle;
+            list-style-position: inside;
+            list-style-image: url('https://example.com/list-icon.png');
+        }
+
+        /* 表格相关属性 */
+        .table-section table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .table-section th,
+        .table-section td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .table-section th {
+            background-color: #e0e0e0;
+        }
+
+        /* 定位相关属性 */
+        .position-section {
+            position: relative;
+        }
+
+        .position-child {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            background-color: #ffd700;
+            z-index: 1;
+        }
+
+        /* 浮动相关属性 */
+        .float-section .float-left {
+            float: left;
+            width: 200px;
+            background-color: #90ee90;
+        }
+
+        .float-section .float-right {
+            float: right;
+            width: 200px;
+            background-color: #ff6347;
+        }
+
+        .float-section::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* 弹性布局相关属性 */
+        .flex-section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            align-content: space-between;
+        }
+
+        .flex-item {
+            width: 100px;
+            height: 100px;
+            background-color: #87ceeb;
+            margin: 10px;
+        }
+
+        /* 网格布局相关属性 */
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 100px);
+            grid-gap: 20px;
+        }
+
+        .grid-item {
+            background-color: #dda0dd;
+            padding: 20px;
+        }
+
+        /* 过渡和动画相关属性 */
+        .transition-section {
+            width: 100px;
+            height: 100px;
+            background-color: #ffb6c1;
+            transition: width 2s, height 2s, background-color 2s;
+        }
+
+        .transition-section:hover {
+            width: 200px;
+            height: 200px;
+            background-color: #008080;
+        }
+
+        .animation-section {
+            width: 100px;
+            height: 100px;
+            background-color: #f0e68c;
+            animation: move 5s infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(200px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* 响应式设计相关属性 */
+        @media (max-width: 768px) {
+            .responsive-section {
+                font-size: 14px;
+            }
+        }
+
+        /* 伪类和伪元素相关属性 */
+        .pseudo-section a:link {
+            color: #007BFF;
+        }
+
+        .pseudo-section a:visited {
+            color: #800080;
+        }
+
+        .pseudo-section a:hover {
+            color: #ff0000;
+        }
+
+        .pseudo-section a:active {
+            color: #00ff00;
+        }
+
+        .pseudo-section p::first-letter {
+            font-size: 24px;
+            color: #007BFF;
+        }
+
+        .pseudo-section p::first-line {
+            font-weight: bold;
+        }
+
+        /* 多列布局相关属性 */
+        .multicolumn-section {
+            column-count: 3;
+            column-gap: 20px;
+            column-rule: 1px solid #ccc;
+        }
+
+        /* 变换相关属性 */
+        .transform-section {
+            width: 100px;
+            height: 100px;
+            background-color: #20b2aa;
+            transform: rotate(45deg);
+            transform-origin: center;
+        }
+
+        /* 滤镜相关属性 */
+        .filter-section img {
+            filter: grayscale(100%);
+            filter: blur(5px);
+            filter: brightness(50%);
+            filter: contrast(200%);
+        }
+
+        /* 混合模式相关属性 */
+        .blend-mode-section {
+            width: 200px;
+            height: 200px;
+            background-color: #ff0000;
+            mix-blend-mode: multiply;
+        }
+
+        /* 裁剪路径相关属性 */
+        .clip-path-section {
+            width: 200px;
+            height: 200px;
+            background-color: #008000;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+    </style>
+</head>
+
+<body>
+<div class="font-section">
+    <p>这是字体相关属性的示例。这里展示了字体家族、大小、粗细、样式、行高、字母间距、文本对齐、装饰、转换和阴影等属性。</p>
+</div>
+<div class="color-bg-section">
+    <p>这是颜色和背景相关属性的示例。包括文本颜色、背景颜色、背景图像、重复方式、位置、大小和附件等属性。</p>
+</div>
+<div class="box-model-section">
+    <p>这是盒模型相关属性的示例。展示了宽度、高度、内边距、边框、圆角、外边距、盒-sizing 和盒阴影等属性。</p>
+</div>
+<div class="list-section">
+    <ul>
+        <li>这是列表相关属性的示例。包括列表类型、位置和图像等属性。</li>
+    </ul>
+</div>
+<div class="table-section">
+    <table>
+        <thead>
+        <tr>
+            <th>表头 1</th>
+            <th>表头 2</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>单元格 1</td>
+            <td>单元格 2</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="position-section">
+    <div class="position-child">
+        <p>这是定位相关属性的示例。使用了相对定位和绝对定位，以及 z-index 属性。</p>
+    </div>
+</div>
+<div class="float-section">
+    <div class="float-left">
+        <p>左浮动元素</p>
+    </div>
+    <div class="float-right">
+        <p>右浮动元素</p>
+    </div>
+</div>
+<div class="flex-section">
+    <div class="flex-item">弹性项 1</div>
+    <div class="flex-item">弹性项 2</div>
+    <div class="flex-item">弹性项 3</div>
+</div>
+<div class="grid-section">
+    <div class="grid-item">网格项 1</div>
+    <div class="grid-item">网格项 2</div>
+    <div class="grid-item">网格项 3</div>
+</div>
+<div class="transition-section">
+    <p>这是过渡相关属性的示例。鼠标悬停时会改变宽度、高度和背景颜色。</p>
+</div>
+<div class="animation-section">
+    <p>这是动画相关属性的示例。元素会不断地水平移动。</p>
+</div>
+<div class="responsive-section">
+    <p>这是响应式设计相关属性的示例。当屏幕宽度小于 768px 时，字体大小会改变。</p>
+</div>
+<div class="pseudo-section">
+    <a href="#">这是伪类的示例。展示了链接的不同状态。</a>
+    <p>这是伪元素的示例。首字母和首行有特殊样式。</p>
+</div>
+<div class="multicolumn-section">
+    <p>这是多列布局相关属性的示例。文本被分成三列显示。</p>
+</div>
+<div class="transform-section">
+    <p>这是变换相关属性的示例。元素被旋转了 45 度。</p>
+</div>
+<div class="filter-section">
+    <img src="https://picsum.photos/200/150" alt="图片示例">
+    <p>这是滤镜相关属性的示例。图片应用了灰度、模糊、亮度和对比度等滤镜。</p>
+</div>
+<div class="blend-mode-section">
+    <p>这是混合模式相关属性的示例。元素与背景有混合效果。</p>
+</div>
+<div class="clip-path-section">
+    <p>这是裁剪路径相关属性的示例。元素被裁剪成了菱形。</p>
+</div>
+</body>
+
+</html>
