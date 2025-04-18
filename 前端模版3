@@ -1,0 +1,209 @@
+// 1. 变量声明
+// 使用 let 声明变量，可重新赋值
+let variable1 = 10;
+console.log("variable1 的初始值: ", variable1);
+variable1 = 20;
+console.log("variable1 重新赋值后的值: ", variable1);
+
+// 使用 const 声明常量，声明后不可重新赋值
+const constant1 = 30;
+console.log("常量 constant1 的值: ", constant1);
+
+// 2. 数据类型
+// 数字类型
+let num1 = 15;
+let num2 = 3.14;
+console.log("整数类型: ", num1);
+console.log("浮点类型: ", num2);
+
+// 字符串类型
+let str1 = "Hello";
+let str2 = 'World';
+let combinedStr = `${str1} ${str2}`;
+console.log("字符串拼接结果: ", combinedStr);
+
+// 布尔类型
+let isTrue = true;
+let isFalse = false;
+console.log("布尔值 true: ", isTrue);
+console.log("布尔值 false: ", isFalse);
+
+// 数组类型
+let array1 = [1, 2, 3, 4, 5];
+console.log("数组元素: ", array1);
+array1.push(6);
+console.log("数组添加元素后: ", array1);
+let firstElement = array1[0];
+console.log("数组的第一个元素: ", firstElement);
+
+// 对象类型
+let person = {
+    name: "Alice",
+    age: 25,
+    sayHello: function() {
+        console.log(`Hello, my name is ${this.name}`);
+    }
+};
+console.log("对象的 name 属性: ", person.name);
+person.sayHello();
+
+// 3. 函数
+// 函数声明
+function add(a, b) {
+    return a + b;
+}
+let sum = add(5, 7);
+console.log("函数 add 的计算结果: ", sum);
+
+// 箭头函数
+let multiply = (a, b) => a * b;
+let product = multiply(3, 4);
+console.log("箭头函数 multiply 的计算结果: ", product);
+
+// 4. 控制流语句
+// if - else 语句
+let number = 12;
+if (number > 10) {
+    console.log("数字大于 10");
+} else {
+    console.log("数字小于等于 10");
+}
+
+// for 循环
+for (let i = 0; i < 5; i++) {
+    console.log("for 循环当前迭代值: ", i);
+}
+
+// while 循环
+let j = 0;
+while (j < 3) {
+    console.log("while 循环当前迭代值: ", j);
+    j++;
+}
+
+// do - while 循环
+let k = 0;
+do {
+    console.log("do - while 循环当前迭代值: ", k);
+    k++;
+} while (k < 2);
+
+// switch 语句
+let day = 3;
+switch (day) {
+    case 1:
+        console.log("星期一");
+        break;
+    case 2:
+        console.log("星期二");
+        break;
+    case 3:
+        console.log("星期三");
+        break;
+    default:
+        console.log("未知日期");
+}
+
+// 5. 异常处理
+try {
+    let result = 10 / 0;
+    console.log(result);
+} catch (error) {
+    console.log("捕获到错误: ", error.message);
+}
+
+// 6. 作用域
+// 全局作用域
+let globalVar = 100;
+function scopeExample() {
+// 函数作用域
+    let localVar = 200;
+    console.log("全局变量: ", globalVar);
+    console.log("局部变量: ", localVar);
+}
+scopeExample();
+
+// 7. 原型和继承
+// 构造函数
+function Animal(name) {
+    this.name = name;
+}
+Animal.prototype.speak = function() {
+    console.log(`${this.name} 发出声音`);
+};
+
+// 继承
+function Dog(name) {
+    Animal.call(this, name);
+}
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+Dog.prototype.bark = function() {
+    console.log(`${this.name} 汪汪叫`);
+};
+
+let myDog = new Dog("Buddy");
+myDog.speak();
+myDog.bark();
+
+// 8. 模块（ES6 模块）
+// 由于这里是单文件示例，只是概念展示
+// 在实际项目中，会有多个文件
+// 导出
+// export const exportedValue = 50;
+// 导入
+// import { exportedValue } from './module.js';
+
+// 9. 异步编程
+// 回调函数
+function asyncFunction(callback) {
+    setTimeout(() => {
+        callback("异步操作完成");
+    }, 1000);
+}
+asyncFunction((result) => {
+    console.log("回调函数结果: ", result);
+});
+
+// Promise
+function asyncPromise() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("Promise 操作完成");
+        }, 1500);
+    });
+}
+asyncPromise().then((result) => {
+    console.log("Promise 结果: ", result);
+});
+
+// async/await
+async function asyncAwaitExample() {
+    try {
+        let result = await asyncPromise();
+        console.log("async/await 结果: ", result);
+    } catch (error) {
+        console.log("async/await 错误: ", error);
+    }
+}
+asyncAwaitExample();
+
+// 10. 类（ES6 类）
+class Rectangle {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    getArea() {
+        return this.width * this.height;
+    }
+}
+let rect = new Rectangle(5, 10);
+console.log("矩形面积: ", rect.getArea());
+
+// 11. 事件处理（在浏览器环境中）
+// 假设存在一个按钮元素
+// const button = document.getElementById('myButton');
+// button.addEventListener('click', () => {
+//     console.log('按钮被点击');
+// });
