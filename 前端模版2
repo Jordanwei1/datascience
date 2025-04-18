@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front-End 技术栈 练习模板</title>
+    <style>
+        /* CSS 知识点大全 */
+        /* 字体相关属性 */
+        .font-section {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            text-align: center;
+            text-decoration: underline;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #ccc;
+        }
+        /* 颜色和背景 */
+        .color-bg-section {
+            color: #333;
+            background-color: #f0f8ff;
+            background-image: url('https://picsum.photos/800/600');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        /* 盒模型 */
+        .box-model-section {
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            border: 5px solid #007BFF;
+            border-radius: 10px;
+            margin: 30px auto;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        /* 列表 */
+        .list-section ul {
+            list-style-type: circle;
+            list-style-position: inside;
+            list-style-image: url('https://example.com/list-icon.png');
+        }
+        /* 表格 */
+        .table-section table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        .table-section th,
+        .table-section td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .table-section th { background-color: #e0e0e0; }
+        /* 定位 */
+        .position-section { position: relative; }
+        .position-child {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            background-color: #ffd700;
+            z-index: 1;
+        }
+        /* 浮动 */
+        .float-section .float-left { float: left; width: 200px; background-color: #90ee90; }
+        .float-section .float-right { float: right; width: 200px; background-color: #ff6347; }
+        .float-section::after { content: ""; display: table; clear: both; }
+        /* 弹性布局 */
+        .flex-section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            align-content: space-between;
+        }
+        .flex-item { width: 100px; height: 100px; background-color: #87ceeb; margin: 10px; }
+        /* 网格布局 */
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: repeat(2,100px);
+            grid-gap: 20px;
+        }
+        .grid-item { background-color: #dda0dd; padding: 20px; }
+        /* 过渡与动画 */
+        .transition-section {
+            width: 100px; height: 100px;
+            background-color: #ffb6c1;
+            transition: width 2s, height 2s, background-color 2s;
+        }
+        .transition-section:hover {
+            width: 200px;
+            height: 200px;
+            background-color: #008080;
+        }
+        .animation-section {
+            width: 100px; height: 100px;
+            background-color: #f0e68c;
+            animation: move 5s infinite;
+        }
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(200px); }
+            100% { transform: translateX(0); }
+        }
+        /* 响应式 */
+        @media (max-width:768px) {
+            .responsive-section { font-size: 14px; }
+        }
+        /* 伪类与伪元素 */
+        .pseudo-section a:link { color: #007BFF; }
+        .pseudo-section a:visited { color: #800080; }
+        .pseudo-section a:hover { color: #ff0000; }
+        .pseudo-section a:active { color: #00ff00; }
+        .pseudo-section p::first-letter { font-size:24px; color:#007BFF; }
+        .pseudo-section p::first-line { font-weight:bold; }
+        /* 多列布局 */
+        .multicolumn-section { column-count:3; column-gap:20px; column-rule:1px solid #ccc; }
+        /* 变换 */
+        .transform-section {
+            width:100px; height:100px;
+            background-color:#20b2aa;
+            transform:rotate(45deg);
+            transform-origin:center;
+        }
+        /* 滤镜 */
+        .filter-section img {
+            filter: grayscale(100%) blur(5px) brightness(50%) contrast(200%);
+        }
+        /* 混合模式 */
+        .blend-mode-section {
+            width:200px; height:200px;
+            background-color:#ff0000;
+            mix-blend-mode:multiply;
+        }
+        /* 裁剪路径 */
+        .clip-path-section {
+            width:200px; height:200px;
+            background-color:#008000;
+            clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
+        }
+        /* 通用代码样式 */
+        .code-box { background:#f4f4f4; padding:15px; border-radius:5px; margin:10px 0; white-space: pre-wrap; }
+        .demo-area { padding:10px 0; }
+        button { padding:8px 15px; margin:5px; cursor:pointer; }
+    </style>
+</head>
+<body>
+<h1>Front-End 技术栈 练习模板</h1>
+
+<!-- HTML 标签示例 -->
+<section id="html-tags">
+    <h2>HTML 标签示例</h2>
+    <!-- 标题 -->
+    <h1>这是 H1 标题</h1>
+    <h2>这是 H2 标题</h2>
+    <h3>这是 H3 标题</h3>
+    <p>这是段落 &lt;p&gt; 标签</p>
+    <a href="https://www.baidu.com" target="_blank">链接标签 &lt;a&gt;</a>
+    <br/>
+    <img src="https://picsum.photos/100/60" alt="示例图片">
+    <hr/>
+    <abbr title="China">CN</abbr>
+    <address>
+        示例地址：<a href="mailto:example@domain.com">email 联系</a><br>
+        电话：123-456-7890
+    </address>
+    <article>文章内容示例</article>
+    <section>文档节 &lt;section&gt;</section>
+    <nav>导航 &lt;nav&gt;</nav>
+    <header>页眉 &lt;header&gt;</header>
+    <footer>页脚 &lt;footer&gt;</footer>
+    <aside>侧边栏 &lt;aside&gt;</aside>
+    <figure>
+        <img src="https://picsum.photos/200/100" alt="示例">
+        <figcaption>图注 &lt;figcaption&gt;</figcaption>
+    </figure>
+    <table border="1">
+        <caption>表格标题 &lt;caption&gt;</caption>
+        <thead>
+        <tr><th>表头1</th><th>表头2</th></tr>
+        </thead>
+        <tbody>
+        <tr><td>单元格1</td><td>单元格2</td></tr>
+        </tbody>
+    </table>
+    <form action="#" method="post">
+        <label>输入示例：<input type="text" name="example"></label>
+        <button type="submit">提交 &lt;button&gt;</button>
+    </form>
+    <audio controls>
+        <source src="#" type="audio/mpeg">
+    </audio>
+    <video controls width="200">
+        <source src="#" type="video/mp4">
+    </video>
+    <canvas id="demoCanvas" width="200" height="100"></canvas>
+    <details>
+        <summary>详情 &lt;details&gt;</summary>
+        <p>这是折叠内容</p>
+    </details>
+    <code>代码 &lt;code&gt;</code>
+    <pre>预格式文本 &lt;pre&gt;</pre>
+    <!-- 更多标签可仿照此结构练习 -->
+</section>
+
+<!-- CSS 示例 -->
+<section id="css-demo">
+    <h2>CSS 知识点示例</h2>
+    <div class="font-section"><p>字体相关属性示例</p></div>
+    <div class="color-bg-section"><p>颜色与背景示例</p></div>
+    <div class="box-model-section"><p>盒模型示例</p></div>
+    <div class="list-section"><ul><li>列表样式示例</li></ul></div>
+    <div class="table-section"><table><thead><tr><th>表头</th><th>表头</th></tr></thead><tbody><tr><td>内容</td><td>内容</td></tr></tbody></table></div>
+    <div class="position-section"><div class="position-child"><p>定位示例</p></div></div>
+    <div class="float-section"><div class="float-left"><p>左浮动</p></div><div class="float-right"><p>右浮动</p></div></div>
+    <div class="flex-section"><div class="flex-item">Flex1</div><div class="flex-item">Flex2</div><div class="flex-item">Flex3</div></div>
+    <div class="grid-section"><div class="grid-item">Grid1</div><div class="grid-item">Grid2</div><div class="grid-item">Grid3</div></div>
+    <div class="transition-section"><p>过渡示例</p></div>
+    <div class="animation-section"><p>动画示例</p></div>
+    <div class="responsive-section"><p>响应式示例</p></div>
+    <div class="pseudo-section"><a href="#">伪类链接</a><p>首字母与首行示例</p></div>
+    <div class="multicolumn-section"><p>多列布局示例，这段文字会被分成多列显示。</p></div>
+    <div class="transform-section"><p>变换示例</p></div>
+    <div class="filter-section"><img src="https://picsum.photos/200/150" alt="滤镜示例"><p>滤镜示例</p></div>
+    <div class="blend-mode-section"><p>混合模式示例</p></div>
+    <div class="clip-path-section"><p>裁剪路径示例</p></div>
+</section>
+
+<!-- JavaScript 示例 -->
+<section id="js-demo">
+    <h2>JavaScript 知识点示例</h2>
+    <!-- 1. 变量与常量 -->
+    <div class="demo-area">
+        <h3>1. 变量与常量</h3>
+        <div class="code-box"><code>let variable1 = 10;
+            console.log(variable1);
+            const constant1 = 30;
+            console.log(constant1);</code></div>
+    </div>
+    <!-- 2. 数据类型 & 3. 控制流 & 4. 循环 -->
+    <div class="demo-area">
+        <h3>2-4. 数据类型、流程控制与循环</h3>
+        <div class="code-box"><code>// 示例代码
+            let str = "Hello";
+            let num = 123;
+            let bool = true;
+
+            if(num > 100) { console.log("大于100"); } else { console.log("小于等于100"); }
+
+            for(let i=0;i<3;i++){ console.log(i); }</n</code></div>
+    </div>
+    <!-- 5. 函数与箭头函数 -->
+    <div class="demo-area">
+        <h3>5. 函数</h3>
+        <div class="code-box"><code>function add(a,b){ return a+b; }
+            const square = x => x*x;
+            console.log(add(2,3), square(4));</code></div>
+    </div>
+    <!-- 6. 异步编程 -->
+    <div class="demo-area">
+        <h3>6. 异步编程</h3>
+        <div class="code-box"><code>new Promise(res=>setTimeout(()=>res('完成'),1000)).then(console.log);
+            async function fetchData(){ return await Promise.resolve('数据'); }</nfetchData().then(console.log);</code></div>
+    </div>
+    <!-- 7. DOM 操作与事件 -->
+    <div class="demo-area">
+        <h3>7. DOM 操作与事件</h3>
+        <button id="js-btn">点击我</button>
+        <div id="js-output"></div>
+    </div>
+</section>
+
+<script>
+    // DOM 与事件示例脚本
+    document.getElementById('js-btn').addEventListener('click', () => {
+        document.getElementById('js-output').textContent = '按钮被点击！';
+    });
+    // Canvas 示例
+    const canvas = document.getElementById('demoCanvas');
+    if(canvas.getContext) {
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#008080';
+        ctx.fillRect(20,20,160,60);
+    }
+</script>
+</body>
+</html>
