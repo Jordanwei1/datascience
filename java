@@ -384,3 +384,252 @@ public class JavaMastery {
 9. 注解: 元数据, 常用@SuppressWarnings/@Override/@Deprecated
 10. 其他: 多线程(Runnable/Thread)、反射(Class类)、Lambda表达式(JDK8+)等
 */
+
+
+
+
+
+
+
+
+/**
+ * 【千行代码入门Java】
+ * 涵盖Java核心知识点：基础语法、面向对象、集合、异常等
+ */
+public class JavaKnowledgeEncyclopedia {
+
+    /* 基础语法----基础语法----基础语法----基础语法----基础语法 */
+    public static void basicSyntax() {
+        //-- 基本数据类型
+        byte b = 127;           // 8位 (-128~127)
+        short s = 32767;        // 16位
+        int i = 2147483647;     // 32位（默认整型）
+        long l = 9223372036854775807L; // 64位
+        
+        float f = 3.14f;        // 32位单精度
+        double d = 3.1415926535;// 64位双精度（默认浮点型）
+        
+        char c = 'A';           // 16位Unicode
+        boolean bool = true;    // true/false
+        
+        //-- 类型转换
+        int num = (int)3.14;    // 强制转换（精度丢失）
+        double d2 = num;        // 自动转换
+        
+        //-- 运算符
+        int sum = 10 + 5;       // 算术运算符
+        boolean isTrue = (10 > 5) && (3 != 2); // 逻辑运算符
+        int bitwise = 5 & 3;    // 位运算：0101 & 0011 = 0001
+        
+        //-- 流程控制
+        // if-else
+        if (num > 0) {
+            System.out.println("正数");
+        } else if (num < 0) {
+            System.out.println("负数");
+        } else {
+            System.out.println("零");
+        }
+        
+        // switch（JDK7+支持字符串）
+        String day = "MON";
+        switch(day) {
+            case "MON": 
+                System.out.println("周一");
+                break;
+            default:
+                System.out.println("未知");
+        }
+        
+        // 循环结构
+        for(int j=0; j<5; j++) {
+            System.out.print(j + " ");
+        }
+        
+        int k = 0;
+        while(k < 5) {
+            System.out.print(k++ + " ");
+        }
+        
+        do {
+            System.out.print(k-- + " ");
+        } while(k > 0);
+        
+        // 增强for循环
+        int[] nums = {1,2,3};
+        for(int n : nums) {
+            System.out.print(n + " ");
+        }
+    }
+
+    /* 面向对象----面向对象----面向对象----面向对象 */
+    static class OOPExample {
+        //-- 类定义
+        public static class Animal {
+            // 字段（属性）
+            private String name;
+            protected int age;
+            
+            // 构造方法
+            public Animal(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+            
+            // 方法
+            public void eat() {
+                System.out.println(name + "正在进食");
+            }
+            
+            // 访问控制
+            public String getName() {
+                return name;
+            }
+        }
+
+        //-- 继承
+        public static class Dog extends Animal {
+            private String breed;
+            
+            public Dog(String name, int age, String breed) {
+                super(name, age); // 调用父类构造
+                this.breed = breed;
+            }
+            
+            // 方法重写
+            @Override
+            public void eat() {
+                System.out.println(getName() + "在啃骨头");
+            }
+            
+            // 重载
+            public void eat(String food) {
+                System.out.println(getName() + "吃" + food);
+            }
+        }
+
+        //-- 多态
+        public static void animalEat(Animal animal) {
+            animal.eat(); // 动态绑定
+        }
+
+        //-- 接口
+        interface Swimmable {
+            void swim(); // 默认public abstract
+            default void breath() { // JDK8默认方法
+                System.out.println("呼吸");
+            }
+        }
+
+        //-- 抽象类
+        abstract class Bird {
+            abstract void fly();
+        }
+    }
+
+    /* 集合框架----集合框架----集合框架----集合框架 */
+    public static void collectionFramework() {
+        //-- List（有序可重复）
+        List<String> arrayList = new ArrayList<>();
+        arrayList.add("Apple");
+        arrayList.add("Banana");
+        
+        List<String> linkedList = new LinkedList<>();
+        linkedList.add(0, "First");
+        
+        //-- Set（唯一性）
+        Set<Integer> hashSet = new HashSet<>();
+        hashSet.add(1);
+        hashSet.add(1); // 无效
+        
+        Set<String> treeSet = new TreeSet<>(); // 自然排序
+        
+        //-- Map（键值对）
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("Alice", 25);
+        hashMap.put("Bob", 30);
+        
+        // 迭代器
+        Iterator<Map.Entry<String, Integer>> it = hashMap.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry<String, Integer> entry = it.next();
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
+        // Java8 Stream API
+        hashMap.entrySet().stream()
+            .filter(entry -> entry.getValue() > 25)
+            .forEach(System.out::println);
+    }
+
+    /* 异常处理----异常处理----异常处理----异常处理 */
+    public static void exceptionHandling() {
+        try {
+            // 可能抛出异常的代码
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("除零错误: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("通用异常捕获");
+        } finally {
+            System.out.println("总是执行");
+        }
+        
+        // 自定义异常
+        try {
+            throw new MyException("自定义错误");
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static class MyException extends Exception {
+        public MyException(String message) {
+            super(message);
+        }
+    }
+
+    /* 高级特性----高级特性----高级特性----高级特性 */
+    public static void advancedFeatures() {
+        //-- 泛型
+        Box<Integer> intBox = new Box<>(10);
+        Box<String> strBox = new Box<>("内容");
+        
+        //-- 反射
+        try {
+            Class<?> clazz = Class.forName("java.lang.String");
+            Method[] methods = clazz.getDeclaredMethods();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        //-- 多线程
+        Runnable task = () -> {
+            System.out.println(Thread.currentThread().getName() + "运行中");
+        };
+        new Thread(task).start();
+        
+        //-- Lambda表达式
+        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+        names.forEach(name -> System.out.println(name.toUpperCase()));
+    }
+
+    static class Box<T> {
+        private T content;
+        
+        public Box(T content) {
+            this.content = content;
+        }
+        
+        public T getContent() {
+            return content;
+        }
+    }
+
+    public static void main(String[] args) {
+        basicSyntax();
+        collectionFramework();
+        exceptionHandling();
+        advancedFeatures();
+    }
+}
