@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端全栈开发学习模板</title>
+  <base href="https://yourdomain.com/" target="_blank"> <!-- 基础链接设置 -->
+
+  <!-- 全局CSS样式（包含所有核心知识点） -->
+  <style>
+    /* -------------------- 基础样式 -------------------- */
+    :root {
+      --primary-color: #2A6496;
+      --bg-color: #F5F7FA;
+      --font-family: 'Segoe UI', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box; /* 全局盒模型 */
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      line-height: 1.7;
+      color: #333;
+      background-color: var(--bg-color);
+    }
+
+    /* -------------------- 文本样式 -------------------- */
+    .text-demo {
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      text-align: justify;
+      text-decoration: underline dotted #666;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+      word-spacing: 2px;
+      line-height: 2;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* -------------------- 盒模型 -------------------- */
+    .box-model {
+      width: 300px;
+      height: 200px;
+      padding: 20px 30px;
+      border: 5px solid var(--primary-color);
+      border-radius: 10px;
+      margin: 30px auto;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      outline: 3px dashed #FF6B6B;
+    }
+
+    /* -------------------- 弹性布局(Flexbox) -------------------- */
+    .flex-container {
+      display: flex;
+      justify-content: space-around; /* 水平分布 */
+      align-items: center; /* 垂直居中 */
+      flex-wrap: wrap; /* 换行 */
+      height: 400px;
+      background: rgba(42, 100, 150, 0.05);
+    }
+
+    .flex-item {
+      width: 150px;
+      height: 150px;
+      background: #4ECDC4;
+      margin: 10px;
+      flex-shrink: 0; /* 禁止收缩 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* -------------------- 网格布局(Grid) -------------------- */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3列等宽 */
+      grid-template-rows: repeat(2, 150px); /* 2行固定高 */
+      grid-gap: 20px; /* 网格间距 */
+      margin: 40px 0;
+      padding: 20px;
+      background: white;
+    }
+
+    /* -------------------- 响应式设计 -------------------- */
+    @media (max-width: 768px) {
+      .grid-container { grid-template-columns: 1fr 1fr; } /* 移动端2列 */
+      .flex-item { width: 100%; max-width: 300px; } /* 弹性项自适应 */
+    }
+  </style>
+</head>
+
+<body>
+<!-- -------------------- HTML语义化结构 -------------------- -->
+<header id="header">
+  <h1>前端技术栈学习平台</h1>
+  <nav>
+    <a href="#html-section">HTML</a> |
+    <a href="#css-section">CSS</a> |
+    <a href="#js-section">JavaScript</a>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- -------------------- HTML核心知识点 -------------------- -->
+  <section id="html-section">
+    <h2>HTML5核心标签</h2>
+    <article>
+      <h3>语义化标签演示</h3>
+      <header>文章头部</header>
+      <p>
+        这里演示语义化标签：<br>
+      <nav>导航菜单</nav><br>
+      <article>独立文章内容</article><br>
+      <aside>侧边栏内容</aside><br>
+      <footer>页脚信息</footer>
+      </p>
+    </article>
+
+    <h3>表单元素与验证</h3>
+    <form id="contact-form" onsubmit="return formValidation(event)">
+      <label>姓名：<input type="text" required placeholder="请输入姓名"></label><br>
+      <label>邮箱：<input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></label><br>
+      <label>电话：<input type="tel" pattern="[1][3-9]\d{9}" required></label><br>
+      <button type="submit">提交表单</button>
+    </form>
+  </section>
+
+  <!-- -------------------- CSS核心知识点 -------------------- -->
+  <section id="css-section">
+    <h2>CSS3核心特性</h2>
+    <div class="box-model">
+      盒模型演示：<br>
+      width:300px <br>
+      padding:20px 30px <br>
+      border-radius:10px <br>
+      box-shadow:0 4px 8px rgba(0,0,0,0.1)
+    </div>
+
+    <div class="flex-container">
+      <div class="flex-item">Flex项1</div>
+      <div class="flex-item">Flex项2</div>
+      <div class="flex-item">Flex项3</div>
+    </div>
+
+    <div class="grid-container">
+      <div class="grid-item">Grid项1</div>
+      <div class="grid-item">Grid项2</div>
+      <div class="grid-item">Grid项3</div>
+    </div>
+  </section>
+
+  <!-- -------------------- JavaScript核心知识点 -------------------- -->
+  <section id="js-section">
+    <h2>JavaScript实战案例</h2>
+    <div id="counter" class="box-model">
+      计数器：<span id="count">0</span><br>
+      <button onclick="incrementCounter()">+</button>
+      <button onclick="decrementCounter()">-</button>
+    </div>
+
+    <h3>DOM操作演示</h3>
+    <p id="demo-text" class="text-demo">这是可交互的文本段落</p>
+    <button onclick="changeTextColor()">改变文本颜色</button>
+  </section>
+</main>
+
+<!-- -------------------- 完整JavaScript代码 -------------------- -->
+<script>
+  // -------------------- 基础语法 --------------------
+  // 变量声明
+  let count = 0; // let块级作用域
+  const PI = 3.14159; // const常量
+
+  // 数据类型
+  const name = '前端开发者'; // 字符串
+  const age = 25; // 数值
+  const isStudent = false; // 布尔值
+  const hobbies = ['编程', '设计', '阅读']; // 数组
+  const user = { name, age, isStudent }; // 对象字面量
+
+  // -------------------- 函数与作用域 --------------------
+  function incrementCounter() {
+    count++; // 计数器增加
+    updateDisplay(); // 更新显示
+  }
+
+  function decrementCounter() {
+    count--; // 计数器减少
+    updateDisplay(); // 更新显示
+  }
+
+  function updateDisplay() {
+    document.getElementById('count').textContent = count;
+  }
+
+  // -------------------- DOM操作 --------------------
+  function changeTextColor() {
+    const textElement = document.getElementById('demo-text');
+    textElement.style.color = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+  }
+
+  function randomColor() {
+    return Math.floor(Math.random() * 256); // 生成0-255随机数
+  }
+
+  // -------------------- 表单验证 --------------------
+  function formValidation(e) {
+    e.preventDefault(); // 阻止表单提交
+
+    const inputs = e.target.querySelectorAll('input');
+    let isValid = true;
+
+    inputs.forEach(input => {
+      if (!input.checkValidity()) {
+        showError(input); // 显示错误信息
+        isValid = false;
+      } else {
+        clearError(input); // 清除错误信息
+      }
+    });
+
+    if (isValid) {
+      alert('表单验证通过！');
+      e.target.submit(); // 提交表单
+    }
+  }
+
+  function showError(input) {
+    const errorMessage = input.nextElementSibling;
+    if (!errorMessage) {
+      const error = document.createElement('span');
+      error.style.color = 'red';
+      error.style.fontSize = '0.9em';
+      error.textContent = '请输入有效信息';
+      input.parentNode.insertBefore(error, input.nextSibling);
+    }
+  }
+
+  function clearError(input) {
+    const errorMessage = input.nextElementSibling;
+    if (errorMessage) {
+      errorMessage.remove();
+    }
+  }
+
+  // -------------------- 异步编程 --------------------
+  // Fetch API示例
+  async function fetchData() {
+    try {
+      const response = await fetch('https://api.example.com/data');
+      const data = await response.json();
+      console.log('获取的数据:', data);
+    } catch (error) {
+      console.error('数据获取失败:', error);
+    }
+  }
+  fetchData(); // 调用API
+
+  // -------------------- 事件处理 --------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    // 页面加载完成后执行
+    console.log('页面加载完成');
+
+    // 给所有a标签添加点击事件
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  });
+
+  // -------------------- 面向对象 --------------------
+  class Animal {
+    constructor(name) {
+      this.name = name;
+    }
+
+    speak() {
+      console.log(`${this.name}发出声音`);
+    }
+  }
+
+  class Dog extends Animal {
+    constructor(name) {
+      super(name); // 调用父类构造函数
+    }
+
+    bark() { // 子类特有方法
+      console.log(`${this.name}汪汪叫`);
+    }
+  }
+
+  const myDog = new Dog('旺财');
+  myDog.speak(); // 输出：旺财发出声音
+  myDog.bark(); // 输出：旺财汪汪叫
+</script>
+</body>
+</html>
